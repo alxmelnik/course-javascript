@@ -62,7 +62,7 @@ function reduce(array, fn, initial) {
   return sumNum;
 }
 
-// reduce([1, 2, 3], (all, current) => console.log(all + current))
+console.log(reduce([1, 2, 3], (all, current) => all + current));
 
 /*
  Задание 4:
