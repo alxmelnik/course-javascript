@@ -35,8 +35,8 @@ function loadAndSortTowns() {
       .then(function (response) {
         return response.json();
       })
-      .then(function (towns) {
-        const sortArrTown = towns.sort(function (a, b) {
+      .then(function (arrTowns) {
+        const sortArrTown = arrTowns.sort(function (a, b) {
           if (a.name > b.name) {
             return 1;
           }
