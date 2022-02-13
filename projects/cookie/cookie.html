@@ -1,0 +1,75 @@
+<style>
+    #app input {
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin: 5px 0;
+    }
+
+    #app table {
+        width: 100%;
+    }
+
+    #app table td,
+    #app table th {
+        padding: 5px;
+        text-align: left;
+    }
+
+    #app table td.value {
+        word-break: break-word;
+    }
+
+    #app tbody tr:nth-child(odd) {
+        background: #ddd;
+    }
+
+    .name {
+      color: rgb(207, 99, 99)
+    }
+
+    .value {
+      color: rgb(207, 99, 99)
+    }
+
+
+</style>
+
+<div id="app">
+    <div id="filter-block">
+        Поиск cookie: <input id="filter-name-input" placeholder="имя cookie" type="text">
+    </div>
+    <hr>
+    <div id="add-block">
+        Добавить cookie:<br>
+        <input id="add-name-input" placeholder="имя cookie" type="text"><br>
+        <input id="add-value-input" placeholder="значение cookie" type="text"><br>
+        <button id="add-button">добавить cookie</button>
+    </div>
+    <hr>
+    <div id="list-block">
+        Доступные cookie:
+        <table id="list-table">
+            <thead>
+            <tr>
+                <th>имя</th>
+                <th>значение</th>
+                <th>удалить</th>
+            </tr>
+            </thead>
+            <tbody class="list">
+            <!-- tr добавлять сюда -->
+              <!-- <tr class="item">
+                  <td class="name">1имя</td>
+                  <td class="value">значение</td>
+                  <td><button class="remove-btn">удалить</button></td>
+              </tr>
+              <tr class="item">
+                  <td class="name">2имя</td>
+                  <td class="value">значение</td>
+                  <td><button class="remove-btn">удалить</button></td>
+              </tr> -->
+            </tbody>
+        </table>
+    </div>
+</div>
