@@ -23,6 +23,16 @@
     #app tbody tr:nth-child(odd) {
         background: #ddd;
     }
+
+    .name {
+      color: rgb(207, 99, 99)
+    }
+
+    .value {
+      color: rgb(207, 99, 99)
+    }
+
+
 </style>
 
 <div id="app">
@@ -47,8 +57,18 @@
                 <th>удалить</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="list">
             <!-- tr добавлять сюда -->
+              <!-- <tr class="item">
+                  <td class="name">1имя</td>
+                  <td class="value">значение</td>
+                  <td><button class="remove-btn">удалить</button></td>
+              </tr>
+              <tr class="item">
+                  <td class="name">2имя</td>
+                  <td class="value">значение</td>
+                  <td><button class="remove-btn">удалить</button></td>
+              </tr> -->
             </tbody>
         </table>
     </div>

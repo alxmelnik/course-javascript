@@ -45,8 +45,93 @@ const addButton = homeworkContainer.querySelector('#add-button');
 // таблица со списком cookie
 const listTable = homeworkContainer.querySelector('#list-table tbody');
 
+// const removeButton = homeworkContainer.querySelectorAll('.remove-btn');
+const list = homeworkContainer.querySelector('.list');
+// const items = homeworkContainer.querySelectorAll('.item');
+
+// console.log(removeButton);
+// console.log(list);
+// console.log(item);
+
+// storage.data = JSON.stringify({
+//   name: addNameInput.value,
+//   nameValue: addValueInput.value
+// })
+
+//куки в объект {name: "value"}
+const cookies = document.cookie.split('; ').reduce((prev, current) => {
+  const [name, value] = current.split('=');
+  prev[name] = value;
+  return prev;
+}, {});
+
+console.log(cookies);
+
+drawTable();
+
 filterNameInput.addEventListener('input', function () {});
 
-addButton.addEventListener('click', () => {});
+addButton.addEventListener('click', () => {
+  document.cookie = `${addNameInput.value}=${addValueInput.value}`;
 
-listTable.addEventListener('click', (e) => {});
+  addNameInput.value = '';
+  addValueInput.value = '';
+  drawTable();
+});
+
+listTable.addEventListener('click', (e) => {
+  const role = e.target.dataset.role;
+  const cookieName = e.target.dataset.cookieName;
+
+  if (role === 'remove-cookie') {
+    cookies.delete(cookieName);
+    document.cookie = `${cookieName}=deleted; max-age=0`;
+    drawTable();
+  }
+});
+
+// // удалить строку
+// removeButton.forEach(function (btn, i) {
+//   btn.addEventListener('click', function () {
+//     items[i].remove();
+//   });
+// });
+
+// нарисовать таблицу
+
+function drawTable() {
+  const fragment = document.createDocumentFragment();
+
+  listTable.innerHTML = '';
+
+  for (const key in cookies) {
+    const tr = document.createElement('tr');
+    const nameTd = document.createElement('td');
+    const valueTd = document.createElement('td');
+    const removeTd = document.createElement('td');
+    const removeBtn = document.createElement('button');
+
+    tr.classList.add('item');
+
+    nameTd.classList.add('name');
+    nameTd.textContent = key;
+
+    valueTd.classList.add('value');
+    valueTd.textContent = cookies[key];
+
+    removeBtn.classList.add('remove-btn');
+    removeBtn.dataset.role = 'remove-cookie';
+    removeBtn.dataset.cookieName = key;
+    removeBtn.textContent = 'Удалить';
+
+    tr.appendChild(nameTd);
+    tr.appendChild(valueTd);
+    tr.appendChild(removeTd);
+
+    removeTd.appendChild(removeBtn);
+
+    fragment.appendChild(tr);
+
+    list.appendChild(fragment);
+  }
+}
