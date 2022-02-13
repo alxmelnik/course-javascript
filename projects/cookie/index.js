@@ -49,34 +49,43 @@ const listTable = homeworkContainer.querySelector('#list-table tbody');
 const list = homeworkContainer.querySelector('.list');
 // const items = homeworkContainer.querySelectorAll('.item');
 
-// console.log(removeButton);
-// console.log(list);
-// console.log(item);
+// куки в map()
+const cookies = document.cookie
+  .split('; ')
+  .filter(Boolean)
+  .reduce((prev, current) => {
+    const [name, value] = current.split('=');
+    prev.set(name, value);
 
-// storage.data = JSON.stringify({
-//   name: addNameInput.value,
-//   nameValue: addValueInput.value
-// })
+    return prev;
+  }, new Map());
 
-//куки в объект {name: "value"}
-const cookies = document.cookie.split('; ').reduce((prev, current) => {
-  const [name, value] = current.split('=');
-  prev[name] = value;
-  return prev;
-}, {});
+// console.log(cookies);
 
-console.log(cookies);
+let filter = '';
 
 drawTable();
 
-filterNameInput.addEventListener('input', function () {});
+filterNameInput.addEventListener('input', function () {
+  filter = filterNameInput.value;
+
+  // console.log(filterNameInput.value);
+
+  drawTable();
+});
 
 addButton.addEventListener('click', () => {
+  if (addNameInput.value === false || addValueInput.value === false) {
+    return;
+  }
+
   document.cookie = `${addNameInput.value}=${addValueInput.value}`;
+  cookies.set(addNameInput.value, addValueInput.value);
+
+  drawTable();
 
   addNameInput.value = '';
   addValueInput.value = '';
-  drawTable();
 });
 
 listTable.addEventListener('click', (e) => {
@@ -102,9 +111,15 @@ listTable.addEventListener('click', (e) => {
 function drawTable() {
   const fragment = document.createDocumentFragment();
 
-  listTable.innerHTML = '';
+  list.innerHTML = '';
 
-  for (const key in cookies) {
+  for (const [name, value] of cookies) {
+    // console.log(filter)
+
+    if (filter && !name.includes(filter) && !value.includes(filter)) {
+      continue;
+    }
+
     const tr = document.createElement('tr');
     const nameTd = document.createElement('td');
     const valueTd = document.createElement('td');
@@ -114,14 +129,14 @@ function drawTable() {
     tr.classList.add('item');
 
     nameTd.classList.add('name');
-    nameTd.textContent = key;
+    nameTd.textContent = name;
 
     valueTd.classList.add('value');
-    valueTd.textContent = cookies[key];
+    valueTd.textContent = value;
 
-    removeBtn.classList.add('remove-btn');
     removeBtn.dataset.role = 'remove-cookie';
-    removeBtn.dataset.cookieName = key;
+    removeBtn.dataset.cookieName = name;
+    removeBtn.classList.add('remove-btn');
     removeBtn.textContent = 'Удалить';
 
     tr.appendChild(nameTd);
